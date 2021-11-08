@@ -24,67 +24,73 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
+//clase controladora de la activity activity_main.xml
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    //declaracion de las referencias a objetos de los distintos tipos usados en la activity
     Button conexion;
     Button enviarSms;
     EditText mensaje;
     EditText telefono;
-    String infoRed;
     WebView webView;
     TextView datosAlumno;
 
+    //variable accesible desde la clase
+    String infoRed;
 
-    //ID de peticion para identificar la peticion de ese permiso (me invento este id)
-    static final int ID_PETICION_PERMISO_SEND_SMS=1111;
+    //ID de peticion para identificar la peticion de ese permiso (el id es generico)
+    static final int ID_PETICION_PERMISO_SEND_SMS=1234;
 
-    //inicializa la activity
+    //inicializacion de la activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //asignacion del componente por su id. asignacion de listener de acciones sobre el mismo.
         conexion = (Button) findViewById(R.id.butConexion);
         conexion.setOnClickListener(this);
 
+        //asignacion del componente por su id. asignacion de listener de acciones sobre el mismo.
         enviarSms = (Button) findViewById(R.id.butEnviar);
         enviarSms.setOnClickListener(this);
 
+        //asignacion del componente por su id.
         mensaje = (EditText) findViewById(R.id.etMensaje);
         telefono = (EditText) findViewById(R.id.etTelefono);
 
+        //asignacion del componente por su id. carga de una web.
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://es.wikipedia.org/");
+        webView.loadUrl("https://www.google.es/");
 
+        //guardado de las preferencias y establecimeinto de las mismas en el TextView destino
         setSharedPreferences();
         getSharedPreferences();
     }
 
+    //deteccion del id del componente al recibir un evento generado por hacer click
     @Override
     public void onClick(View view) {
 
         if(view.getId() == R.id.butConexion){
             comprobarConexion(view);
-            String text = infoRed;
             int duracion = Toast.LENGTH_SHORT;
-            Toast.makeText(getApplicationContext(),text,duracion).show();
-
+            Toast.makeText(getApplicationContext(),infoRed,duracion).show();
         }
-
         if(view.getId() == R.id.butEnviar){
 
             if(!telefono.getText().toString().isEmpty() && !mensaje.getText().toString().isEmpty()) {
                 sendSMSByCode(telefono.getText().toString(), mensaje.getText().toString());
-
             }
             else{
                 Toast.makeText(getApplicationContext(), "Ha dejado algun campo vacio",Toast.LENGTH_SHORT).show();
-
             }
         }
     }
 
+    //comprobacion de la conexion en funcion de la version de Android
     public void comprobarConexion(View v) {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

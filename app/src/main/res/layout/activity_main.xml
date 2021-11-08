@@ -16,7 +16,8 @@
         android:textColor="#DD2C00"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/butConexion"
@@ -36,23 +37,22 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="@string/textoMensaje"
-        android:hintTextColor="#78909C"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="@+id/tvNombreAlumno"
-        app:layout_constraintTop_toBottomOf="@+id/tvNombreAlumno" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreAlumno"
+        tools:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/etTelefono"
         android:layout_width="137dp"
         android:layout_height="53dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:hint="@string/telefono"
-        android:hintTextColor="#78909C"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/butEnviar"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/butConexion"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/butEnviar"
