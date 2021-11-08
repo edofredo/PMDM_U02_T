@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -13,7 +14,10 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.telephony.ServiceState;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -37,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView datosAlumno;
 
     //variable accesible desde la clase
-    String infoRed;
+    private String infoRed;
 
     //ID de peticion para identificar la peticion de ese permiso (el id es generico)
     static final int ID_PETICION_PERMISO_SEND_SMS=1234;
@@ -161,15 +165,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(text.length()>140) {
                 ArrayList<String> list = smsManager.divideMessage(text);
                 for(String fragmento_texto : list) {
-                    smsManager.sendTextMessage(number, null, fragmento_texto, null, null);
+                    smsManager.sendTextMessage(number, null, fragmento_texto,null, null);
                     Toast.makeText(getApplicationContext(), "Se han enviado los mensaje",Toast.LENGTH_SHORT).show();
-
                 }
             }
             else{ //Envia el mensaje simple
                 smsManager.sendTextMessage(number, null, text, null, null);
                 Toast.makeText(getApplicationContext(), "Se ha enviado el mensaje",Toast.LENGTH_SHORT).show();
-                ;
             }
         }
         else{
@@ -178,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.SEND_SMS},
                     ID_PETICION_PERMISO_SEND_SMS);
-
         }
     }
 
